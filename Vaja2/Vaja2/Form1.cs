@@ -107,12 +107,21 @@ namespace Vaja2
                     }
 
                     Jarvisov_obhod(a, stevilo_tock); // klicemo funkcijo Jarisov obhod
+                    tocke.Clear();
 
                 }
                 else if (radioButton4.Checked == true)
                 {
                     /// Hitra konveksna lupina
                     MessageBox.Show("Hitra konveksna lupina");
+                    Tocka[] a = new Tocka[stevilo_tock];
+                    for (int i = 0; i < stevilo_tock; i++)
+                    {
+                        a[i] = new Tocka(tocke[i].x, tocke[i].y); // si shranimo tocke v novo polje
+                    }
+
+                    Hitra_konveksna_lupina(a, stevilo_tock); // klicemo funkcijo
+                    tocke.Clear();
                 }
             }
             else 
@@ -178,6 +187,135 @@ namespace Vaja2
                 else { g.DrawLine(pen, lupina[i].x, lupina[i].y, lupina[0].x, lupina[0].y); }
             }
 
+        }
+        
+        List<Tocka> lupina_HKL = new List<Tocka>(); // kamor si shranim tocke lupine za hitro
+        public void Hitra_konveksna_lupina(Tocka[] tocke, int st) {
+            Brush aBrush = (Brush)Brushes.Black; // za risanje tock
+            Brush bBrush = (Brush)Brushes.Red; // za risanje tock
+            Pen pen = new Pen(ForeColor); // za risanje daljic med tockama
+            Graphics g = this.CreateGraphics();
+
+            /// najprej najdemo minx in maxx tocki
+            /// to sta najbolj levo in desno
+            int index_min=0, index_max=0;
+            for (int i = 0; i < st; i++) {
+                if (tocke[i].x < tocke[index_min].x) {
+                    index_min = i;
+                }
+                if (tocke[i].x > tocke[index_max].x) {
+                    index_max = i;
+                }
+            }
+            //MessageBox.Show("Dobili min pa max tocki");
+            g.FillRectangle(bBrush, tocke[index_min].x, tocke[index_min].y, 2, 2); // narisemo tocko
+            g.FillRectangle(bBrush, tocke[index_max].x, tocke[index_max].y, 2, 2); // narisemo tocko
+            g.DrawLine(pen, tocke[index_min].x, tocke[index_min].y, tocke[index_max].x, tocke[index_max].y);
+
+            HKL(tocke[index_min], tocke[index_max], 1);
+            HKL(tocke[index_min], tocke[index_max], -1);
+            //MessageBox.Show("Koncali: " + lupina_HKL.Count());
+            /*for (int i = 0; i < lupina_HKL.Count; i++) {
+                MessageBox.Show("Pobarval");
+                g.FillRectangle(bBrush, lupina_HKL[i].x, lupina_HKL[i].y, 2, 2); // narisemo tocko
+            }*/
+            //MessageBox.Show("Zaj bom narisal lik");
+            //izris();
+        }
+
+        /// Vrne na kateri strani je tocka t3 glede na daljico t1 in t2
+        /// ce je nad daljico je -1 drgace pa 1
+        int Stran(Tocka t1, Tocka t2, Tocka t3)
+        {
+            int val = (t3.y - t1.y) * (t2.x - t1.x) - (t2.y - t1.y) * (t3.x - t1.x);
+
+            if (val > 0) { return 1; }
+            if (val < 0) { return -1; }
+            return 0;
+        }
+
+        /// vrne razdaljo od tocke do daljice
+        int razdalja(Tocka t1, Tocka t2, Tocka t3)
+        {
+            return Math.Abs((t3.y - t1.y) * (t2.x - t1.x) - (t2.y - t1.y) * (t3.x - t1.x));
+        }
+
+        void HKL(Tocka tocka_min, Tocka tocka_max, int stran) {
+
+            Brush aBrush = (Brush)Brushes.Black; // za risanje tock
+            Brush bBrush = (Brush)Brushes.Red; // za risanje tock
+            Pen pen = new Pen(ForeColor); // za risanje daljic med tockama
+            Graphics g = this.CreateGraphics();
+
+            int index = -1;
+            int max_razdalja = 0;
+            // poiscemo najvecjo razdaljo od tocke do daljice, ki je na pravi strani daljice
+            for (int i = 0; i < stevilo_tock; i++)
+            {
+                int temp = razdalja(tocka_min, tocka_max, tocke[i]);
+                if (Stran(tocka_min, tocka_max, tocke[i]) == stran && temp > max_razdalja)
+                {
+                    index = i;
+                    max_razdalja = temp;
+                }
+            }
+            //MessageBox.Show("Max razdalja");
+            //g.FillRectangle(bBrush, tocke[index].x, tocke[index].y, 2, 2); // narisemo tocko
+            if (index > 0)
+            {
+                //MessageBox.Show("Max razdalja");
+                g.DrawLine(pen, tocke[index].x, tocke[index].y, tocka_max.x, tocka_max.y);
+                g.DrawLine(pen, tocke[index].x, tocke[index].y, tocka_min.x, tocka_min.y);
+                // Create pen.
+                //Brush cBrush = (Brush)Brushes.White; // za risanje tock
+                /*Pen blackPen = new Pen(Color.Black, 3);
+
+                // Create points that define polygon.
+                Point point1 = new Point(tocka_max.x, tocka_max.y);
+                Point point2 = new Point(tocka_min.x,tocka_min.y);
+                Point point3 = new Point(tocke[index].x, tocke[index].y);
+                Point[] curvePoints =
+                         {
+                             point1,
+                             point2,
+                             point3,
+                        };
+
+                // Draw polygon to screen.
+                //g.DrawPolygon(blackPen, curvePoints);
+                g.FillPolygon(aBrush, curvePoints);
+                */
+            }
+
+            // ce ne najdemo dobene damo zadni dve tocki v lupino
+            if (index == -1)
+            {
+                lupina_HKL.Add(tocka_min);
+                lupina_HKL.Add(tocka_max);
+                return;
+            }
+
+            // Rekurzivno klice sama sebe 
+            HKL(tocke[index], tocka_min, -Stran(tocke[index], tocka_min, tocka_max));
+            HKL(tocke[index], tocka_max, -Stran(tocke[index], tocka_max, tocka_min));
+
+        }
+
+        void izris() {
+            Graphics g = this.CreateGraphics();
+            Pen blackPen = new Pen(Color.Black, 3);
+            Brush aBrush = (Brush)Brushes.Black; // za risanje tock
+
+            // Create points that define polygon.
+
+            Point[] curvePoints = new Point[lupina_HKL.Count()];
+            for (int i = 0; i < lupina_HKL.Count(); i++) {
+                curvePoints[i].X = lupina_HKL[i].x;
+                curvePoints[i].Y = lupina_HKL[i].y;
+            }
+            // Draw polygon to screen.
+            //g.DrawPolygon(blackPen, curvePoints);
+            g.FillPolygon(aBrush, curvePoints);
         }
 
     }
