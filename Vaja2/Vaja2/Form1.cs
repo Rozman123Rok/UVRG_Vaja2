@@ -69,6 +69,25 @@ namespace Vaja2
             if (nacin_generiranja == 1) 
             {
                 // NORMALNO
+                int mean1 = 300;
+                int mean2 = 250;
+                int stdDev = 50;
+                Random rand = new Random();
+                for (int i = 0; i < stevilo_tock; i++)
+                {
+                    double u1 = 1.0 - rand.NextDouble();
+                    double u2 = 1.0 - rand.NextDouble();
+                    double randStdNormal1 = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2);
+                    double u3 = 1.0 - rand.NextDouble();
+                    double u4 = 1.0 - rand.NextDouble();
+                    double randStdNormal2 = Math.Sqrt(-2.0 * Math.Log(u3)) * Math.Sin(2.0 * Math.PI * u4);
+
+                    int x = (int)(mean1 + stdDev * randStdNormal1) + 50;
+                    int y = (int)(mean2 + stdDev * randStdNormal2) + 50;
+                    //MessageBox.Show("Dobil: x:" + x + " y: " + y);
+                    tocke.Add(new Tocka(x, y));
+                    g.FillRectangle(aBrush, x, y, 2, 2); // narisemo tocko
+                }
             }
             else if (nacin_generiranja == 2)
             {
@@ -113,7 +132,7 @@ namespace Vaja2
                 else if (radioButton4.Checked == true)
                 {
                     /// Hitra konveksna lupina
-                    MessageBox.Show("Hitra konveksna lupina");
+                    //MessageBox.Show("Hitra konveksna lupina");
                     Tocka[] a = new Tocka[stevilo_tock];
                     for (int i = 0; i < stevilo_tock; i++)
                     {
@@ -214,13 +233,7 @@ namespace Vaja2
 
             HKL(tocke[index_min], tocke[index_max], 1);
             HKL(tocke[index_min], tocke[index_max], -1);
-            //MessageBox.Show("Koncali: " + lupina_HKL.Count());
-            /*for (int i = 0; i < lupina_HKL.Count; i++) {
-                MessageBox.Show("Pobarval");
-                g.FillRectangle(bBrush, lupina_HKL[i].x, lupina_HKL[i].y, 2, 2); // narisemo tocko
-            }*/
-            //MessageBox.Show("Zaj bom narisal lik");
-            //izris();
+
         }
 
         /// Vrne na kateri strani je tocka t3 glede na daljico t1 in t2
@@ -259,32 +272,11 @@ namespace Vaja2
                     max_razdalja = temp;
                 }
             }
-            //MessageBox.Show("Max razdalja");
-            //g.FillRectangle(bBrush, tocke[index].x, tocke[index].y, 2, 2); // narisemo tocko
+
             if (index > 0)
             {
-                //MessageBox.Show("Max razdalja");
                 g.DrawLine(pen, tocke[index].x, tocke[index].y, tocka_max.x, tocka_max.y);
                 g.DrawLine(pen, tocke[index].x, tocke[index].y, tocka_min.x, tocka_min.y);
-                // Create pen.
-                //Brush cBrush = (Brush)Brushes.White; // za risanje tock
-                /*Pen blackPen = new Pen(Color.Black, 3);
-
-                // Create points that define polygon.
-                Point point1 = new Point(tocka_max.x, tocka_max.y);
-                Point point2 = new Point(tocka_min.x,tocka_min.y);
-                Point point3 = new Point(tocke[index].x, tocke[index].y);
-                Point[] curvePoints =
-                         {
-                             point1,
-                             point2,
-                             point3,
-                        };
-
-                // Draw polygon to screen.
-                //g.DrawPolygon(blackPen, curvePoints);
-                g.FillPolygon(aBrush, curvePoints);
-                */
             }
 
             // ce ne najdemo dobene damo zadni dve tocki v lupino
@@ -301,22 +293,6 @@ namespace Vaja2
 
         }
 
-        void izris() {
-            Graphics g = this.CreateGraphics();
-            Pen blackPen = new Pen(Color.Black, 3);
-            Brush aBrush = (Brush)Brushes.Black; // za risanje tock
-
-            // Create points that define polygon.
-
-            Point[] curvePoints = new Point[lupina_HKL.Count()];
-            for (int i = 0; i < lupina_HKL.Count(); i++) {
-                curvePoints[i].X = lupina_HKL[i].x;
-                curvePoints[i].Y = lupina_HKL[i].y;
-            }
-            // Draw polygon to screen.
-            //g.DrawPolygon(blackPen, curvePoints);
-            g.FillPolygon(aBrush, curvePoints);
-        }
 
     }
 }

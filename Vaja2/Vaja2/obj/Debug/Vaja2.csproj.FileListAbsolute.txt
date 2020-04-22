@@ -16,3 +16,12 @@ E:\Faks\2.Letnik\2.Semester\Uvod v rac geo\02.Vaja\UVRG_Vaja2\Vaja2\Vaja2\obj\De
 E:\Faks\2.Letnik\2.Semester\Uvod v rac geo\02.Vaja\UVRG_Vaja2\Vaja2\Vaja2\obj\Debug\Vaja2.csproj.GenerateResource.cache
 E:\Faks\2.Letnik\2.Semester\Uvod v rac geo\02.Vaja\UVRG_Vaja2\Vaja2\Vaja2\obj\Debug\Vaja2.exe
 E:\Faks\2.Letnik\2.Semester\Uvod v rac geo\02.Vaja\UVRG_Vaja2\Vaja2\Vaja2\obj\Debug\Vaja2.pdb
+D:\Faks\02.Semester\UVRG\02.Vaja-\UVRG_Vaja2\Vaja2\Vaja2\bin\Debug\Vaja2.exe.config
+D:\Faks\02.Semester\UVRG\02.Vaja-\UVRG_Vaja2\Vaja2\Vaja2\bin\Debug\Vaja2.exe
+D:\Faks\02.Semester\UVRG\02.Vaja-\UVRG_Vaja2\Vaja2\Vaja2\bin\Debug\Vaja2.pdb
+D:\Faks\02.Semester\UVRG\02.Vaja-\UVRG_Vaja2\Vaja2\Vaja2\obj\Debug\Vaja2.csprojAssemblyReference.cache
+D:\Faks\02.Semester\UVRG\02.Vaja-\UVRG_Vaja2\Vaja2\Vaja2\obj\Debug\Vaja2.Form1.resources
+D:\Faks\02.Semester\UVRG\02.Vaja-\UVRG_Vaja2\Vaja2\Vaja2\obj\Debug\Vaja2.Properties.Resources.resources
+D:\Faks\02.Semester\UVRG\02.Vaja-\UVRG_Vaja2\Vaja2\Vaja2\obj\Debug\Vaja2.csproj.GenerateResource.cache
+D:\Faks\02.Semester\UVRG\02.Vaja-\UVRG_Vaja2\Vaja2\Vaja2\obj\Debug\Vaja2.exe
+D:\Faks\02.Semester\UVRG\02.Vaja-\UVRG_Vaja2\Vaja2\Vaja2\obj\Debug\Vaja2.pdb
